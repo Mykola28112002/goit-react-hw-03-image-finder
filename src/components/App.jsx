@@ -25,6 +25,7 @@ export class App extends Component {
       searchQuery: name,
       showLoader: true,
     }))
+    console.log(this.state.showLoader)
     
   };
   componentDidUpdate(prevProps, prevState) {
@@ -35,20 +36,24 @@ export class App extends Component {
   fethGetPixabay = () => {
     if (this.state.searchQuery !== '') {
       getPixabay(this.state.searchQuery, this.state.page)
-        .then(friends => {
-        if (friends.length === 0) {
-          alert(`Sorry, there are no images matching your search query: ${this.state.searchQuery}. Please try again.`)
-        }
+        .then(result => {
         this.setState(prevState => ({
-          array: [...prevState.array, ...friends],
+          array: [...prevState.array, ...result],
         }))
         this.setState(prevState => ({
           showLoader: false,
         }))
+          console.log(result.length)
+          if (result.length === 0) {
+          
+          alert(`Sorry, there are no images matching your search query: ${this.state.searchQuery}. Please try again.`)
+          this.setState(prevState => ({
+            showLoader: false,
+        }))
+        }
         
       })
         .catch(error => {
-          console.error(error.message)
           if (error) {
             alert("We're sorry, but you've reached the end of search results.")
             this.setState(prevState => ({
@@ -60,7 +65,6 @@ export class App extends Component {
   }
   
   handleClickLoadMore = () => {
-    console.log(this.state.showLoader)
     this.setState(prevState => ({
       page: prevState.page + 1,
       showLoader: true,
