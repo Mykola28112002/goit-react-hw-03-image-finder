@@ -1,4 +1,6 @@
-import { Li,Img } from './ImageGalleryItem.styled';
+import { Li, Img } from './ImageGalleryItem.styled';
+
+
 
 export const ImageGalleryItem = ({ array: { webformatURL, largeImageURL }, toggleModal }) => {
     return (
@@ -7,3 +9,4 @@ export const ImageGalleryItem = ({ array: { webformatURL, largeImageURL }, toggl
     </Li>
     )
 };
+

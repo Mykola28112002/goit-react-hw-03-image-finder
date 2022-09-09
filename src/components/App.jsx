@@ -25,40 +25,38 @@ export class App extends Component {
       searchQuery: name,
       showLoader: true,
     }))
-    console.log(this.state.showLoader)
-    
+    setTimeout(() => {
+      this.setState(prevState => ({
+      showLoader: false,
+    }))
+    }, 500);
   };
   componentDidUpdate(prevProps, prevState) {
-    if ( prevState.searchQuery !== this.state.searchQuery || prevState.page !== this.state.page) {
+    if (prevState.searchQuery !== this.state.searchQuery || prevState.page !== this.state.page) {
       this.fethGetPixabay();
     }
-  }
+}
   fethGetPixabay = () => {
     if (this.state.searchQuery !== '') {
       getPixabay(this.state.searchQuery, this.state.page)
         .then(result => {
-        this.setState(prevState => ({
-          array: [...prevState.array, ...result],
-        }))
-        this.setState(prevState => ({
-          showLoader: false,
-        }))
-          console.log(result.length)
-          if (result.length === 0) {
           
-          alert(`Sorry, there are no images matching your search query: ${this.state.searchQuery}. Please try again.`)
           this.setState(prevState => ({
-            showLoader: false,
-        }))
-        }
+            array: [...prevState.array, ...result],
+          }))
         
-      })
+          if (result.length === 0) {
+             this.setState(prevState => ({
+            }))
+            alert(`Sorry, there are no images matching your search query: ${this.state.searchQuery}. Please try again.`)
+           
+          }  
+        })
         .catch(error => {
+          console.log(error.Status)
           if (error) {
             alert("We're sorry, but you've reached the end of search results.")
-            this.setState(prevState => ({
-              showLoader: false,
-            }))
+            
           }
         });
     }
@@ -69,6 +67,11 @@ export class App extends Component {
       page: prevState.page + 1,
       showLoader: true,
     }))
+    setTimeout(() => {
+      this.setState(prevState => ({
+      showLoader: false,
+    }))
+    }, 500);
   };
 
   toggleModal = (currentImg) => {
@@ -79,7 +82,6 @@ export class App extends Component {
   };
 
   render() { 
-    
     const { array, showModal, img, showLoader } = this.state
     return <Div>
         <Searchbar onSubmit={this.onSabmit}/>
