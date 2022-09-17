@@ -85,7 +85,7 @@ export class App extends Component {
     const { array, showModal, img, showLoader } = this.state
     return <Div>
         <Searchbar onSubmit={this.onSabmit}/>
-      {array === [] && (<ImageGallery array={array} toggleModal={this.toggleModal}/>)}
+      {array.length !== 0 && (<ImageGallery array={array} toggleModal={this.toggleModal}/>)}
       {array.length !== 0 && (<Button clickLoadMore={this.handleClickLoadMore}></Button>)}
         {showModal && (<Modal toggleModal={this.toggleModal}>
           <img src={img} alt="" />
